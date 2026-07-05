@@ -60,7 +60,7 @@ through `src/lib/sync/adapter.ts`'s `CatalogSyncAdapter` interface. Today
 
 ## Validating the data layer
 
-`npm run sync:catalog` runs `scripts/sync-catalog.ts` against whichever
+`yarn sync:catalog` runs `scripts/sync-catalog.ts` against whichever
 adapter is active, prints product/out-of-stock counts, and fails if it finds
 duplicate slugs — a cheap sanity check to run in CI once a real adapter is
 wired up.

@@ -6,7 +6,7 @@ construido en Next.js 14 + TypeScript + Tailwind CSS.
 
 > **Sobre el catálogo:** el entorno donde se generó este proyecto no tiene
 > acceso de red al sitio original (`yerbasdelabuena.com.ar`) — solo a
-> registros de paquetes (npm, etc.), confirmado contra la política de red del
+> registros de paquetes (npm/yarn, etc.), confirmado contra la política de red del
 > proxy. Por eso el catálogo incluido es un set de datos representativo (37
 > productos reales del rubro: yerbas, mates, bombillas, termos, alfajores,
 > galletitas y accesorios, con stock, variantes y marcas argentinas),
@@ -18,8 +18,8 @@ construido en Next.js 14 + TypeScript + Tailwind CSS.
 ## Empezar
 
 ```bash
-npm install
-npm run dev
+yarn install
+yarn dev
 ```
 
 Abrí [http://localhost:3000](http://localhost:3000).
@@ -28,12 +28,12 @@ Abrí [http://localhost:3000](http://localhost:3000).
 
 | Comando | Qué hace |
 |---|---|
-| `npm run dev` | Servidor de desarrollo |
-| `npm run build` | Build de producción |
-| `npm run start` | Sirve el build de producción |
-| `npm run lint` | ESLint (config `next/core-web-vitals`) |
-| `npm run typecheck` | `tsc --noEmit` |
-| `npm run sync:catalog` | Valida la capa de datos del catálogo (ver `scripts/sync-catalog.ts`) |
+| `yarn dev` | Servidor de desarrollo |
+| `yarn build` | Build de producción |
+| `yarn start` | Sirve el build de producción |
+| `yarn lint` | ESLint (config `next/core-web-vitals`) |
+| `yarn typecheck` | `tsc --noEmit` |
+| `yarn sync:catalog` | Valida la capa de datos del catálogo (ver `scripts/sync-catalog.ts`) |
 
 ## Documentación
 
