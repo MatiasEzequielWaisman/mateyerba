@@ -58,6 +58,28 @@ through `src/lib/sync/adapter.ts`'s `CatalogSyncAdapter` interface. Today
    image-consuming component already expects the same `aspect-square,
    object-cover` box, so this is a drop-in change.
 
+## Real photos: what's in place today
+
+Four categories (yerbas, mates, bombillas, alfajores) ship with a real,
+freely-licensed photo (CC-BY-SA, sourced from Wikimedia Commons) applied as
+the first gallery image across all their products — see
+`CATEGORY_STOCK_PHOTOS` in `src/lib/data/products.ts`. These are **generic
+representative photos**, not each brand's exact packaging: this environment's
+network policy blocks the page-fetch tool too (confirmed 403 even on
+Wikipedia), so there was no way to browse to a specific brand's product page
+and verify an exact-match photo URL. Commons was usable specifically because
+its `upload.wikimedia.org` file URLs are deterministic — computable from a
+documented md5-hash-of-filename scheme — so the URL could be constructed and
+trusted without needing to fetch-and-verify the page first.
+
+Termos, galletitas, and accesorios don't have a confidently-relevant Commons
+match and keep the generative placeholder. Every image gracefully falls back
+to that placeholder if a URL 404s or fails to load (see `ProductArt`), so
+this is a safe, low-risk improvement rather than an all-or-nothing bet.
+
+For real per-product photography (each brand's actual packaging), use the
+"URL de imagen principal" field in `/admin` — see `docs/ADMIN_PANEL.md`.
+
 ## Validating the data layer
 
 `yarn sync:catalog` runs `scripts/sync-catalog.ts` against whichever

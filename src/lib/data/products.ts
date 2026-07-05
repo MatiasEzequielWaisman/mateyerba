@@ -1,4 +1,28 @@
 import { createProduct, linkRelated } from "./product-factory";
+import type { CategorySlug, Product } from "@/lib/types";
+
+/**
+ * Real, freely-licensed (CC-BY-SA) representative photos from Wikimedia
+ * Commons, one per category where a confidently-relevant match was found —
+ * generic representations, not exact brand packaging (see
+ * docs/CATALOG_SYNC.md). Categories without a good match keep the
+ * generative placeholder. URLs are the direct upload.wikimedia.org path
+ * computed from Commons' documented md5-hash file layout.
+ */
+const CATEGORY_STOCK_PHOTOS: Partial<Record<CategorySlug, string>> = {
+  yerbas: "https://upload.wikimedia.org/wikipedia/commons/4/40/Envase_para_yerba_mate.jpg",
+  mates: "https://upload.wikimedia.org/wikipedia/commons/4/48/Selection_of_Yerba_Mate_Gourds.JPG",
+  bombillas: "https://upload.wikimedia.org/wikipedia/commons/5/5f/Bombilla.jpg",
+  alfajores: "https://upload.wikimedia.org/wikipedia/commons/a/ad/Alfajores-Argentins.JPG",
+};
+
+function applyStockPhotos(products: Product[]): Product[] {
+  return products.map((p) => {
+    const url = CATEGORY_STOCK_PHOTOS[p.categorySlug];
+    if (!url) return p;
+    return { ...p, images: p.images.map((img, i) => (i === 0 ? { ...img, url } : img)) };
+  });
+}
 
 const raw = [
   // ── YERBAS ────────────────────────────────────────────────────────────
@@ -589,7 +613,7 @@ const raw = [
   }),
 ];
 
-export const products = linkRelated(raw);
+export const products = linkRelated(applyStockPhotos(raw));
 
 export function getProductBySlug(slug: string) {
   return products.find((p) => p.slug === slug);
