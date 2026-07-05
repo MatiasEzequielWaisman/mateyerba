@@ -11,12 +11,17 @@ import { ProductBadges } from "@/components/product/product-badges";
 import { QuantitySelector } from "@/components/product/quantity-selector";
 import { useCartStore } from "@/lib/store/cart";
 import { useWishlistStore } from "@/lib/store/wishlist";
+import { useCatalogStore } from "@/lib/store/catalog-store";
 import { getBrandBySlug } from "@/lib/data/brands";
 import { cn } from "@/lib/utils";
 import type { Product } from "@/lib/types";
 
-export function PurchasePanel({ product }: { product: Product }) {
+export function PurchasePanel({ product: initialProduct }: { product: Product }) {
   const router = useRouter();
+  // Prefer the live, admin-editable copy (price/stock/badges) over the
+  // build-time snapshot passed from the server, so /admin edits show up
+  // immediately without a rebuild.
+  const product = useCatalogStore((s) => s.products.find((p) => p.slug === initialProduct.slug)) ?? initialProduct;
   const [variantId, setVariantId] = useState(product.variants[0]?.id);
   const [quantity, setQuantity] = useState(1);
   const addItem = useCartStore((s) => s.addItem);

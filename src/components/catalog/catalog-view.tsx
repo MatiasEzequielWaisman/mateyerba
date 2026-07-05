@@ -4,13 +4,14 @@ import { useMemo, useState } from "react";
 import { useRouter, useSearchParams } from "next/navigation";
 import { SlidersHorizontal } from "lucide-react";
 import { Breadcrumbs } from "@/components/shared/breadcrumbs";
+import { AutoGrid, AutoGridItem } from "@/components/shared/auto-grid";
 import { ProductCard } from "@/components/product/product-card";
 import { FiltersSidebar, PRICE_MIN, PRICE_MAX, type CatalogFiltersState } from "@/components/catalog/filters-sidebar";
 import { ActiveFilters } from "@/components/catalog/active-filters";
 import { SortSelect } from "@/components/catalog/sort-select";
 import { Sheet, SheetContent, SheetHeader, SheetTitle, SheetTrigger } from "@/components/ui/sheet";
 import { Button } from "@/components/ui/button";
-import { products } from "@/lib/data/products";
+import { useCatalogStore } from "@/lib/store/catalog-store";
 import { getCategoryBySlug } from "@/lib/data/categories";
 import { filterProducts, sortProducts } from "@/lib/data";
 import type { Availability, CategorySlug, SortOption } from "@/lib/types";
@@ -29,6 +30,7 @@ export function CatalogView() {
   const router = useRouter();
   const searchParams = useSearchParams();
   const [mobileFiltersOpen, setMobileFiltersOpen] = useState(false);
+  const products = useCatalogStore((s) => s.products);
 
   const filters = useMemo(() => parseFilters(searchParams), [searchParams]);
   const sort = (searchParams.get("orden") as SortOption | null) ?? "featured";
@@ -78,7 +80,7 @@ export function CatalogView() {
     if (onlyBestSellers) base = base.filter((p) => p.isBestSeller);
     if (onlyOnSale) base = base.filter((p) => p.compareAtPrice && p.compareAtPrice > p.price);
     return sortProducts(base, sort);
-  }, [filters, search, sort, onlyFeatured, onlyNew, onlyBestSellers, onlyOnSale]);
+  }, [products, filters, search, sort, onlyFeatured, onlyNew, onlyBestSellers, onlyOnSale]);
 
   return (
     <div className="container py-10">
@@ -135,11 +137,13 @@ export function CatalogView() {
               </Button>
             </div>
           ) : (
-            <div className="grid grid-cols-2 gap-x-5 gap-y-10 md:grid-cols-3">
+            <AutoGrid className="gap-x-5 gap-y-10">
               {filtered.map((product) => (
-                <ProductCard key={product.id} product={product} />
+                <AutoGridItem key={product.id} className="w-[calc((100%-1.25rem)/2)] md:w-[calc((100%-2.5rem)/3)]">
+                  <ProductCard product={product} />
+                </AutoGridItem>
               ))}
-            </div>
+            </AutoGrid>
           )}
         </div>
       </div>

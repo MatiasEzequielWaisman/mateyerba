@@ -70,9 +70,14 @@ export function Footer() {
       <div className="border-t border-cream-50/10">
         <div className="container flex flex-col items-center justify-between gap-4 py-6 text-xs text-cream-100/60 md:flex-row">
           <p>© {new Date().getFullYear()} Yerbas de la Buena. Todos los derechos reservados.</p>
-          <div className="flex items-center gap-3">
-            <CreditCard className="h-4 w-4" />
-            <span>Visa · Mastercard · Mercado Pago · Transferencia</span>
+          <div className="flex items-center gap-4">
+            <span className="flex items-center gap-3">
+              <CreditCard className="h-4 w-4" />
+              Visa · Mastercard · Mercado Pago · Transferencia
+            </span>
+            <Link href="/admin" className="transition hover:text-cream-50">
+              Admin
+            </Link>
           </div>
         </div>
       </div>

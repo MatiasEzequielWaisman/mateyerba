@@ -43,6 +43,8 @@ Abrí [http://localhost:3000](http://localhost:3000).
   flujo de datos, estrategia de renderizado y roadmap de escalabilidad.
 - [`docs/CATALOG_SYNC.md`](./docs/CATALOG_SYNC.md) — por qué el catálogo es
   data de referencia y cómo conectar el sitio real.
+- [`docs/ADMIN_PANEL.md`](./docs/ADMIN_PANEL.md) — alcance y límites del
+  panel de administración, y el camino a un backend real.
 
 ## Funcionalidades principales
 
@@ -61,6 +63,10 @@ Abrí [http://localhost:3000](http://localhost:3000).
 - **Checkout** (`/checkout`): flujo de 3 pasos (envío → pago → confirmación).
 - **SEO**: metadata por página, JSON-LD (`Organization`, `Product`,
   `BreadcrumbList`), `sitemap.xml`, `robots.txt`.
+- **Panel de administración** (`/admin`): dashboard, gestión de productos y
+  stock (alta/edición/baja) para el dueño de la tienda. Es una demo de
+  interfaz sin backend — ver [`docs/ADMIN_PANEL.md`](./docs/ADMIN_PANEL.md)
+  para el alcance real y el camino a producción.
 
 ## Stack
 

@@ -10,7 +10,7 @@ import { useState } from "react";
 import { toast } from "sonner";
 import { Input } from "@/components/ui/input";
 import { useCartStore, cartSubtotal } from "@/lib/store/cart";
-import { getBestSellerProducts } from "@/lib/data/products";
+import { useCatalogStore } from "@/lib/store/catalog-store";
 import { formatPrice } from "@/lib/utils";
 
 const FREE_SHIPPING_THRESHOLD = 25000;
@@ -24,10 +24,12 @@ export function CartDrawer() {
   const couponCode = useCartStore((s) => s.couponCode);
   const applyCoupon = useCartStore((s) => s.applyCoupon);
   const [couponInput, setCouponInput] = useState("");
+  const catalogProducts = useCatalogStore((s) => s.products);
 
   const subtotal = cartSubtotal(lines);
   const missingForFreeShipping = Math.max(0, FREE_SHIPPING_THRESHOLD - subtotal);
-  const suggestions = getBestSellerProducts()
+  const suggestions = catalogProducts
+    .filter((p) => p.isBestSeller)
     .filter((p) => !lines.some((l) => l.productSlug === p.slug))
     .slice(0, 3);
 
