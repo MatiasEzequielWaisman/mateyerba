@@ -37,7 +37,12 @@ export function QuickViewModal({
     <Dialog open={open} onOpenChange={onOpenChange}>
       <DialogContent className="p-0">
         <div className="grid gap-0 md:grid-cols-2">
-          <ProductArt placeholder={product.images[0]?.placeholder ?? ""} className="md:h-full" />
+          <ProductArt
+            placeholder={product.images[0]?.placeholder ?? ""}
+            url={product.images[0]?.url}
+            alt={product.images[0]?.alt ?? product.name}
+            className="md:h-full"
+          />
           <div className="flex flex-col gap-4 p-6 md:p-8">
             <DialogTitle className="pr-8">{product.name}</DialogTitle>
             <RatingStars rating={product.rating} reviewCount={product.reviewCount} />

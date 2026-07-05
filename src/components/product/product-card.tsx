@@ -48,7 +48,11 @@ export function ProductCard({ product, className }: { product: Product; classNam
         <div className="relative overflow-hidden rounded-lg">
           <Link href={`/producto/${product.slug}`} className="block" tabIndex={-1}>
             <div className="transition-transform duration-700 ease-premium group-hover:scale-[1.04]">
-              <ProductArt placeholder={product.images[0]?.placeholder ?? ""} />
+              <ProductArt
+                placeholder={product.images[0]?.placeholder ?? ""}
+                url={product.images[0]?.url}
+                alt={product.images[0]?.alt ?? product.name}
+              />
             </div>
           </Link>
 

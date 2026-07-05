@@ -51,6 +51,21 @@ Esto significa:
   (`src/lib/data/product-factory.ts`).
 - Restablecer todo a los datos originales desde el botón "Restablecer
   datos" en el panel.
+- **Poner una foto real por producto** pegando una URL de imagen en el
+  campo "URL de imagen principal" del formulario de alta/edición. Esto
+  existe porque el entorno donde se generó este proyecto tiene bloqueado
+  el acceso de red saliente (ni siquiera la herramienta de fetch de páginas
+  funciona ahí — solo quedan disponibles los registros de paquetes), así
+  que no fue posible traer ni verificar fotos reales de producto desde ese
+  lado. La solución: el campo acepta cualquier URL https de imagen que
+  encuentres vos mismo (Google Imágenes, el sitio de la marca, etc.) desde
+  tu propia computadora con internet normal — el navegador del visitante
+  la carga directo desde ahí. Si la URL falla o no carga, el sitio cae
+  automáticamente en la ilustración genérica de la categoría en vez de
+  mostrar un ícono de imagen rota. Como son links a fotos de terceros, sirven
+  perfecto para esta demo pero no reemplazan tener fotografía propia o
+  licencia de las marcas antes de un lanzamiento real (ver también
+  `docs/CATALOG_SYNC.md`).
 
 ## Camino a producción real
 

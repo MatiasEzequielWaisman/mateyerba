@@ -9,6 +9,7 @@ export interface CartLine {
   variantId: string;
   name: string;
   image: string;
+  imageUrl?: string;
   price: number;
   variantLabel: string;
   quantity: number;
@@ -57,6 +58,7 @@ export const useCartStore = create<CartState>()(
               variantId: variant.id,
               name: product.name,
               image: product.images[0]?.placeholder ?? "",
+              imageUrl: product.images[0]?.url,
               price,
               variantLabel: variant.label,
               quantity,

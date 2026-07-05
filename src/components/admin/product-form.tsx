@@ -9,6 +9,7 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Checkbox } from "@/components/ui/checkbox";
 import { Select, SelectTrigger, SelectValue, SelectContent, SelectItem } from "@/components/ui/select";
+import { ProductArt } from "@/components/product/product-art";
 import { useCatalogStore } from "@/lib/store/catalog-store";
 import { createProduct as buildProduct } from "@/lib/data/product-factory";
 import { categories } from "@/lib/data/categories";
@@ -42,6 +43,7 @@ interface FormState {
   isNew: boolean;
   isBestSeller: boolean;
   isFeatured: boolean;
+  imageUrl: string;
   variants: VariantRow[];
 }
 
@@ -61,6 +63,7 @@ function toFormState(product?: Product): FormState {
       isNew: true,
       isBestSeller: false,
       isFeatured: false,
+      imageUrl: "",
       variants: [{ label: "Único", stock: 0, availability: "in_stock" }],
     };
   }
@@ -78,6 +81,7 @@ function toFormState(product?: Product): FormState {
     isNew: product.isNew,
     isBestSeller: product.isBestSeller,
     isFeatured: product.isFeatured,
+    imageUrl: product.images[0]?.url ?? "",
     variants: product.variants.map((v) => ({ id: v.id, label: v.label, stock: v.stock, availability: v.availability })),
   };
 }
@@ -119,6 +123,7 @@ export function ProductForm({ product }: { product?: Product }) {
         isNew: form.isNew,
         isBestSeller: form.isBestSeller,
         isFeatured: form.isFeatured,
+        images: product.images.map((img, i) => (i === 0 ? { ...img, url: form.imageUrl.trim() || undefined } : img)),
         variants: form.variants.map((v, i) => ({
           id: v.id ?? `${product.slug}-var-${i}`,
           label: v.label,
@@ -146,6 +151,7 @@ export function ProductForm({ product }: { product?: Product }) {
       freeShipping: form.freeShipping,
       shortDescription: form.shortDescription,
       description: form.description,
+      imageUrl: form.imageUrl.trim() || undefined,
       variants: form.variants.map((v) => ({ label: v.label, stock: v.stock, availability: v.availability })),
     });
     addProduct(newProduct);
@@ -212,6 +218,30 @@ export function ProductForm({ product }: { product?: Product }) {
             value={form.shortDescription}
             onChange={(e) => setForm((f) => ({ ...f, shortDescription: e.target.value }))}
           />
+        </div>
+
+        <div className="flex gap-4 sm:col-span-2">
+          <div className="h-24 w-24 shrink-0 overflow-hidden rounded-md border border-stone-200">
+            <ProductArt
+              placeholder={`${form.categorySlug}-0`}
+              url={form.imageUrl.trim() || undefined}
+              alt={form.name}
+            />
+          </div>
+          <div className="flex flex-1 flex-col gap-1.5">
+            <Label htmlFor="imageUrl">URL de imagen principal</Label>
+            <Input
+              id="imageUrl"
+              type="url"
+              placeholder="https://... (pegá acá el link de una foto real)"
+              value={form.imageUrl}
+              onChange={(e) => setForm((f) => ({ ...f, imageUrl: e.target.value }))}
+            />
+            <p className="text-xs text-stone-500">
+              Opcional. Si la dejás vacía, se muestra una ilustración genérica de la categoría. Buscá la foto en tu
+              navegador (Google Imágenes, el sitio de la marca, etc.), copiá el link de la imagen y pegalo acá.
+            </p>
+          </div>
         </div>
 
         <div className="flex flex-col gap-1.5 sm:col-span-2">

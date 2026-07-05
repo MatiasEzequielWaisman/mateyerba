@@ -41,6 +41,8 @@ export interface ProductImage {
   alt: string;
   /** Deterministic placeholder key used to render generated artwork instead of a photograph. */
   placeholder: string;
+  /** Optional real photo URL (set from /admin) — takes priority over the generative placeholder when present. */
+  url?: string;
 }
 
 export interface Review {

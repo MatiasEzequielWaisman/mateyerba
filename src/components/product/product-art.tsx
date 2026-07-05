@@ -1,3 +1,7 @@
+"use client";
+
+import { useState } from "react";
+import Image from "next/image";
 import { Leaf, Coffee, Pipette, FlaskConical, Cookie, Wheat, Package, type LucideIcon } from "lucide-react";
 import { categories } from "@/lib/data/categories";
 import { cn } from "@/lib/utils";
@@ -14,24 +18,47 @@ const ICONS: Record<string, LucideIcon> = {
 };
 
 /**
- * Generative artwork standing in for product photography — this environment
- * has no access to the source site's images (see docs/CATALOG_SYNC.md).
- * Swapping this for real photos later is a one-line change in ProductCard/
- * ProductGallery since it shares the same aspect-square, object-cover
- * contract as next/image.
+ * Product photo with a generative-artwork fallback. Pass `url` (set from
+ * /admin — see docs/ADMIN_PANEL.md) to show a real photo; if it's missing,
+ * broken, or fails to load, this renders the same gradient+icon placeholder
+ * used across the catalog seed instead of a broken image icon.
  */
 export function ProductArt({
   placeholder,
+  url,
+  alt,
   className,
   iconClassName,
+  priority,
 }: {
   placeholder: string;
+  url?: string;
+  alt?: string;
   className?: string;
   iconClassName?: string;
+  priority?: boolean;
 }) {
+  const [failed, setFailed] = useState(false);
   const [categorySlug] = placeholder.split("-") as [CategorySlug];
   const category = categories.find((c) => c.slug === categorySlug) ?? categories[0]!;
   const Icon = ICONS[category.icon] ?? Package;
+
+  if (url && !failed) {
+    return (
+      <div className={cn("relative aspect-square overflow-hidden bg-cream-200", className)}>
+        <Image
+          src={url}
+          alt={alt ?? ""}
+          fill
+          sizes="(min-width: 1024px) 25vw, 50vw"
+          priority={priority}
+          className="object-cover"
+          onError={() => setFailed(true)}
+          unoptimized
+        />
+      </div>
+    );
+  }
 
   return (
     <div

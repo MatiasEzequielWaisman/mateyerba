@@ -125,6 +125,8 @@ export interface ProductInput {
   imageCount?: number;
   weightGrams?: number;
   origin?: string;
+  /** Real photo URL for the first gallery slot — see docs/ADMIN_PANEL.md. */
+  imageUrl?: string;
 }
 
 export function createProduct(input: ProductInput): Product {
@@ -138,6 +140,7 @@ export function createProduct(input: ProductInput): Product {
     id: `${slug}-${i}`,
     alt: `${input.name} — foto ${i + 1}`,
     placeholder: `${input.categorySlug}-${(h + i) % 6}`,
+    url: i === 0 ? input.imageUrl : undefined,
   }));
 
   const variants: ProductVariant[] = (input.variants ?? [{ label: "Único" }]).map((v, i) => ({

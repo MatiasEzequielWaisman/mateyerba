@@ -30,7 +30,7 @@ export function ProductGallery({ images }: { images: ProductImage[] }) {
           className={cn("transition-transform duration-300 ease-premium", zoomed && "scale-[1.8]")}
           style={zoomed ? zoomStyle : undefined}
         >
-          <ProductArt placeholder={active.placeholder} className="rounded-lg" />
+          <ProductArt placeholder={active.placeholder} url={active.url} alt={active.alt} className="rounded-lg" priority />
         </div>
         <span className="pointer-events-none absolute bottom-3 right-3 rounded-full bg-cream-50/80 px-2.5 py-1 text-[0.65rem] font-medium text-forest-800">
           Pasá el mouse para hacer zoom
@@ -49,7 +49,7 @@ export function ProductGallery({ images }: { images: ProductImage[] }) {
             aria-label={`Ver imagen ${i + 1}`}
             aria-current={i === activeIndex}
           >
-            <ProductArt placeholder={img.placeholder} />
+            <ProductArt placeholder={img.placeholder} url={img.url} alt={img.alt} />
           </button>
         ))}
       </div>

@@ -12,7 +12,7 @@ export function OrderSummary({ lines, shippingCost = 0 }: { lines: CartLine[]; s
         {lines.map((line) => (
           <li key={line.variantId} className="flex gap-3">
             <div className="relative h-14 w-14 shrink-0 overflow-hidden rounded-md">
-              <ProductArt placeholder={line.image} />
+              <ProductArt placeholder={line.image} url={line.imageUrl} alt={line.name} />
               <span className="absolute -right-1 -top-1 flex h-5 w-5 items-center justify-center rounded-full bg-forest-900 text-[0.65rem] font-bold text-cream-50">
                 {line.quantity}
               </span>

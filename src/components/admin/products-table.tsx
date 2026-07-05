@@ -92,7 +92,7 @@ export function ProductsTable() {
                 <td className="px-4 py-3">
                   <div className="flex items-center gap-3">
                     <div className="h-10 w-10 shrink-0 overflow-hidden rounded-md">
-                      <ProductArt placeholder={p.images[0]?.placeholder ?? ""} />
+                      <ProductArt placeholder={p.images[0]?.placeholder ?? ""} url={p.images[0]?.url} alt={p.name} />
                     </div>
                     <div>
                       <p className="font-medium text-forest-950">{p.name}</p>

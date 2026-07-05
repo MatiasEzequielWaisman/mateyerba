@@ -69,7 +69,7 @@ export function CartDrawer() {
                 {lines.map((line) => (
                   <li key={line.variantId} className="flex gap-3">
                     <div className="h-20 w-20 shrink-0 overflow-hidden rounded-md">
-                      <ProductArt placeholder={line.image} />
+                      <ProductArt placeholder={line.image} url={line.imageUrl} alt={line.name} />
                     </div>
                     <div className="flex flex-1 flex-col gap-1">
                       <Link href={`/producto/${line.productSlug}`} className="text-sm font-medium text-forest-950 hover:underline">
@@ -110,7 +110,7 @@ export function CartDrawer() {
                         className="w-24 shrink-0 text-center"
                       >
                         <div className="mb-1.5 overflow-hidden rounded-md">
-                          <ProductArt placeholder={p.images[0]?.placeholder ?? ""} />
+                          <ProductArt placeholder={p.images[0]?.placeholder ?? ""} url={p.images[0]?.url} alt={p.name} />
                         </div>
                         <span className="line-clamp-2 text-[0.7rem] text-forest-900">{p.name}</span>
                       </Link>
