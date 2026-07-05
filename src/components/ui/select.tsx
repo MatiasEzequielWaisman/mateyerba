@@ -64,6 +64,9 @@ const SelectContent = React.forwardRef<
     <SelectPrimitive.Content
       ref={ref}
       position={position}
+      side="bottom"
+      align="start"
+      avoidCollisions={false}
       sideOffset={6}
       collisionPadding={16}
       className={cn(
