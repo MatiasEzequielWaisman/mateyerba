@@ -1,6 +1,7 @@
 import type { Brand } from "@/lib/types";
 
 export const brands: Brand[] = [
+  { slug: "artesanal", name: "Artesanal", description: "Producto artesanal, sin marca comercial asociada.", featured: false },
   { slug: "playadito", name: "Playadito", description: "Yerba mate de Corrientes, suave y aromática.", featured: true },
   { slug: "la-merced", name: "La Merced", description: "Tradición jesuítica en cada hoja de yerba.", featured: true },
   { slug: "rosamonte", name: "Rosamonte", description: "La elegida de Misiones para las juntadas largas.", featured: true },

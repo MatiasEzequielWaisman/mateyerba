@@ -49,7 +49,7 @@ function toFormState(product?: Product): FormState {
   if (!product) {
     return {
       name: "",
-      brandSlug: brands[0]!.slug,
+      brandSlug: "artesanal",
       categorySlug: categories[0]!.slug,
       shortDescription: "",
       description: "",
