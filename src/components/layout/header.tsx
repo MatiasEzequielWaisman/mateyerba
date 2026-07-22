@@ -30,7 +30,7 @@ export function Header() {
             <Leaf className="h-[18px] w-[18px]" />
           </span>
           <span className="font-display text-lg font-semibold tracking-tight text-forest-950">
-            Yerbas de la Buena
+            Negocio de Mate
           </span>
         </Link>
 

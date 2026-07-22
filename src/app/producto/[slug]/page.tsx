@@ -11,7 +11,7 @@ import { ProductRail } from "@/components/home/product-rail";
 import { Tabs, TabsList, TabsTrigger, TabsContent } from "@/components/ui/tabs";
 import { ProductJsonLd, BreadcrumbJsonLd } from "@/components/seo/json-ld";
 
-const SITE_URL = "https://www.yerbasdelabuena.com.ar";
+const SITE_URL = "https://www.negociodemate.com.ar";
 
 export function generateStaticParams() {
   return products.map((p) => ({ slug: p.slug }));

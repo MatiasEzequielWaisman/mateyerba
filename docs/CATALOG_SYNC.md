@@ -2,14 +2,14 @@
 
 ## Why the catalog is seed data, not a live scrape
 
-This project was built to redesign `yerbasdelabuena.com.ar` while keeping its
-catalog intact. The build environment used to generate this codebase runs
-behind an egress allowlist that only permits package registries
-(npmjs.org, jsr.io, pypi.org, etc.) — direct requests to
-`yerbasdelabuena.com.ar` are rejected at the network layer (`403` on the
-CONNECT tunnel, confirmed via the proxy's own status endpoint). There was no
-way to fetch a single page, image, or product listing from the source site
-from inside this session.
+This project was built to redesign a reference yerba mate storefront while
+keeping its catalog domain intact. The build environment used to generate
+this codebase runs behind an egress allowlist that only permits package
+registries (npmjs.org, jsr.io, pypi.org, etc.) — direct requests to the
+reference site are rejected at the network layer (`403` on the CONNECT
+tunnel, confirmed via the proxy's own status endpoint). There was no way to
+fetch a single page, image, or product listing from the source site from
+inside this session.
 
 Rather than leaving the storefront empty or hand-waving the data, the data
 layer (`src/lib/data/`) ships with **37 representative products** across all

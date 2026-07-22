@@ -2,7 +2,7 @@ import type { MetadataRoute } from "next";
 import { products } from "@/lib/data/products";
 import { categories } from "@/lib/data/categories";
 
-const SITE_URL = "https://www.yerbasdelabuena.com.ar";
+const SITE_URL = "https://www.negociodemate.com.ar";
 
 export default function sitemap(): MetadataRoute.Sitemap {
   const staticRoutes = [

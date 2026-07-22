@@ -1,4 +1,4 @@
-# Design system — Yerbas de la Buena
+# Design system — Negocio de Mate
 
 A premium, nature-inspired design system built for conversion and calm. Full
 tokens live in `tailwind.config.ts`; this doc explains the reasoning so the

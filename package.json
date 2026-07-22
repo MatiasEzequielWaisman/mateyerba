@@ -1,8 +1,8 @@
 {
-  "name": "yerbas-de-la-buena",
+  "name": "negocio-de-mate",
   "version": "1.0.0",
   "private": true,
-  "description": "Ecommerce premium de yerbas, mates y accesorios — Yerbas de la Buena",
+  "description": "Ecommerce premium de yerbas, mates y accesorios — Negocio de Mate",
   "scripts": {
     "dev": "next dev",
     "build": "next build",

@@ -149,7 +149,7 @@ export function createProduct(input: ProductInput): Product {
     priceDelta: v.priceDelta,
     availability: v.availability ?? input.availability,
     stock: v.stock ?? input.stock,
-    sku: `YDB-${slug.toUpperCase().slice(0, 6)}-${i + 1}`,
+    sku: `NDM-${slug.toUpperCase().slice(0, 6)}-${i + 1}`,
   }));
 
   const reviewTemplates = REVIEW_TEMPLATES[input.categorySlug];

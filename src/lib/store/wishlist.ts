@@ -19,6 +19,6 @@ export const useWishlistStore = create<WishlistState>()(
       },
       has: (slug) => get().slugs.includes(slug),
     }),
-    { name: "ydb-wishlist" }
+    { name: "ndm-wishlist" }
   )
 );

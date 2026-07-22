@@ -30,7 +30,7 @@ export const useAdminAuthStore = create<AdminAuthState>()(
       },
       logout: () => set({ isAdmin: false }),
     }),
-    { name: "ydb-admin-auth" }
+    { name: "ndm-admin-auth" }
   )
 );
 

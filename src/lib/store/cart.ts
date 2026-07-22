@@ -77,7 +77,7 @@ export const useCartStore = create<CartState>()(
       applyCoupon: (code) => set({ couponCode: code }),
       clear: () => set({ lines: [], couponCode: null }),
     }),
-    { name: "ydb-cart" }
+    { name: "ndm-cart" }
   )
 );
 

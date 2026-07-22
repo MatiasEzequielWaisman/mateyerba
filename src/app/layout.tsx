@@ -11,13 +11,13 @@ import { OrganizationJsonLd } from "@/components/seo/json-ld";
 const inter = Inter({ subsets: ["latin"], variable: "--font-inter", display: "swap" });
 const manrope = Manrope({ subsets: ["latin"], variable: "--font-manrope", display: "swap" });
 
-const SITE_URL = "https://www.yerbasdelabuena.com.ar";
+const SITE_URL = "https://www.negociodemate.com.ar";
 
 export const metadata: Metadata = {
   metadataBase: new URL(SITE_URL),
   title: {
-    default: "Yerbas de la Buena — Yerbas, mates y accesorios premium",
-    template: "%s · Yerbas de la Buena",
+    default: "Negocio de Mate — Yerbas, mates y accesorios premium",
+    template: "%s · Negocio de Mate",
   },
   description:
     "Yerbas, mates, bombillas, termos y alfajores seleccionados. Envíos a todo el país, compra 100% segura y hasta 12 cuotas sin interés.",
@@ -25,15 +25,15 @@ export const metadata: Metadata = {
   openGraph: {
     type: "website",
     locale: "es_AR",
-    siteName: "Yerbas de la Buena",
-    title: "Yerbas de la Buena — Yerbas, mates y accesorios premium",
+    siteName: "Negocio de Mate",
+    title: "Negocio de Mate — Yerbas, mates y accesorios premium",
     description:
       "Yerbas, mates, bombillas, termos y alfajores seleccionados. Envíos a todo el país y compra 100% segura.",
     url: SITE_URL,
   },
   twitter: {
     card: "summary_large_image",
-    title: "Yerbas de la Buena",
+    title: "Negocio de Mate",
     description: "Yerbas, mates, bombillas, termos y alfajores seleccionados.",
   },
   robots: { index: true, follow: true },

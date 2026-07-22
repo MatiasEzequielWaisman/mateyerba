@@ -129,7 +129,7 @@ export function ProductForm({ product }: { product?: Product }) {
           label: v.label,
           stock: v.stock,
           availability: v.availability,
-          sku: product.variants[i]?.sku ?? `YDB-${product.slug.toUpperCase().slice(0, 6)}-${i + 1}`,
+          sku: product.variants[i]?.sku ?? `NDM-${product.slug.toUpperCase().slice(0, 6)}-${i + 1}`,
         })),
       });
       toast.success(`${form.name} actualizado`);

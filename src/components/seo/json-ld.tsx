@@ -1,13 +1,13 @@
 import type { Product } from "@/lib/types";
 import { getBrandBySlug } from "@/lib/data/brands";
 
-const SITE_URL = "https://www.yerbasdelabuena.com.ar";
+const SITE_URL = "https://www.negociodemate.com.ar";
 
 export function OrganizationJsonLd() {
   const data = {
     "@context": "https://schema.org",
     "@type": "Organization",
-    name: "Yerbas de la Buena",
+    name: "Negocio de Mate",
     url: SITE_URL,
     logo: `${SITE_URL}/logo.png`,
     sameAs: ["https://www.instagram.com/", "https://www.facebook.com/"],

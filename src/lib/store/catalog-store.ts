@@ -42,6 +42,6 @@ export const useCatalogStore = create<CatalogState>()(
       deleteProduct: (slug) => set({ products: get().products.filter((p) => p.slug !== slug) }),
       resetToSeed: () => set({ products: seedProducts }),
     }),
-    { name: "ydb-admin-catalog" }
+    { name: "ndm-admin-catalog" }
   )
 );

@@ -26,7 +26,7 @@ export function CheckoutFlow() {
   const [stepIndex, setStepIndex] = useState(0);
   const [payment, setPayment] = useState<PaymentMethod>("tarjeta");
   const [completed, setCompleted] = useState(false);
-  const [orderNumber] = useState(() => `YDB-${Math.floor(100000 + Math.random() * 900000)}`);
+  const [orderNumber] = useState(() => `NDM-${Math.floor(100000 + Math.random() * 900000)}`);
 
   const subtotal = cartSubtotal(lines);
   const shippingCost = subtotal >= 25000 || subtotal === 0 ? 0 : 3500;

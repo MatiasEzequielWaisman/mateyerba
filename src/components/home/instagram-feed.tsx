@@ -13,7 +13,7 @@ export function InstagramFeed() {
   return (
     <section className="container py-16">
       <SectionHeading
-        eyebrow="@yerbasdelabuena"
+        eyebrow="@negociodemate"
         title="Seguinos en Instagram"
         align="center"
         className="mb-10"

@@ -12,7 +12,7 @@ export function Footer() {
             <span className="flex h-9 w-9 items-center justify-center rounded-full bg-cream-50 text-forest-900">
               <Leaf className="h-[18px] w-[18px]" />
             </span>
-            <span className="font-display text-lg font-semibold">Yerbas de la Buena</span>
+            <span className="font-display text-lg font-semibold">Negocio de Mate</span>
           </Link>
           <p className="max-w-sm text-sm text-cream-100/70">
             Yerbas, mates, bombillas y accesorios seleccionados para acompañar tu ritual diario.
@@ -69,7 +69,7 @@ export function Footer() {
 
       <div className="border-t border-cream-50/10">
         <div className="container flex flex-col items-center justify-between gap-4 py-6 text-xs text-cream-100/60 md:flex-row">
-          <p>© {new Date().getFullYear()} Yerbas de la Buena. Todos los derechos reservados.</p>
+          <p>© {new Date().getFullYear()} Negocio de Mate. Todos los derechos reservados.</p>
           <div className="flex items-center gap-4">
             <span className="flex items-center gap-3">
               <CreditCard className="h-4 w-4" />

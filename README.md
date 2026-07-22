@@ -1,11 +1,11 @@
-# Yerbas de la Buena — rediseño premium
+# Negocio de Mate — ecommerce premium
 
-Rediseño completo del ecommerce de yerbas, mates y accesorios, con una
-identidad visual nueva (verde bosque, oliva, crema y acentos dorados),
-construido en Next.js 14 + TypeScript + Tailwind CSS.
+Ecommerce de yerbas, mates y accesorios, con una identidad visual propia
+(verde bosque, oliva, crema y acentos dorados), construido en Next.js 14 +
+TypeScript + Tailwind CSS.
 
 > **Sobre el catálogo:** el entorno donde se generó este proyecto no tiene
-> acceso de red al sitio original (`yerbasdelabuena.com.ar`) — solo a
+> acceso de red al sitio de referencia original — solo a
 > registros de paquetes (npm/yarn, etc.), confirmado contra la política de red del
 > proxy. Por eso el catálogo incluido es un set de datos representativo (37
 > productos reales del rubro: yerbas, mates, bombillas, termos, alfajores,
