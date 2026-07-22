@@ -1,0 +1,60 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    --background: 45 38% 96%;
+    --foreground: 152 30% 12%;
+    --muted: 45 24% 91%;
+    --muted-foreground: 140 8% 38%;
+    --border: 45 20% 85%;
+    --input: 45 20% 85%;
+    --ring: 152 45% 25%;
+  }
+
+  * {
+    @apply border-border;
+  }
+
+  html {
+    scroll-behavior: smooth;
+  }
+
+  body {
+    @apply bg-background text-foreground font-sans antialiased;
+    text-rendering: optimizeLegibility;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  ::selection {
+    @apply bg-gold-200 text-forest-900;
+  }
+
+  :focus-visible {
+    @apply outline-none ring-2 ring-forest-600 ring-offset-2 ring-offset-cream-100;
+  }
+}
+
+@layer utilities {
+  .skip-link {
+    @apply sr-only focus:not-sr-only focus:fixed focus:top-3 focus:left-3 focus:z-[100] focus:rounded-md focus:bg-forest-900 focus:px-4 focus:py-2 focus:text-cream-100;
+  }
+
+  .container-padded {
+    @apply container;
+  }
+
+  .shimmer-bg {
+    @apply relative overflow-hidden bg-stone-100;
+  }
+
+  .shimmer-bg::after {
+    content: "";
+    @apply absolute inset-0 -translate-x-full bg-gradient-to-r from-transparent via-white/60 to-transparent animate-shimmer;
+  }
+
+  .balance {
+    text-wrap: balance;
+  }
+}

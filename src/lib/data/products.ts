@@ -1,0 +1,640 @@
+import { createProduct, linkRelated } from "./product-factory";
+import type { CategorySlug, Product } from "@/lib/types";
+
+/**
+ * Real, freely-licensed (CC-BY-SA) representative photos from Wikimedia
+ * Commons, one per category where a confidently-relevant match was found —
+ * generic representations, not exact brand packaging (see
+ * docs/CATALOG_SYNC.md). Categories without a good match keep the
+ * generative placeholder. URLs are the direct upload.wikimedia.org path
+ * computed from Commons' documented md5-hash file layout.
+ */
+const CATEGORY_STOCK_PHOTOS: Partial<Record<CategorySlug, string>> = {
+  yerbas: "https://upload.wikimedia.org/wikipedia/commons/4/40/Envase_para_yerba_mate.jpg",
+  mates: "https://upload.wikimedia.org/wikipedia/commons/4/48/Selection_of_Yerba_Mate_Gourds.JPG",
+  bombillas: "https://upload.wikimedia.org/wikipedia/commons/5/5f/Bombilla.jpg",
+  alfajores: "https://upload.wikimedia.org/wikipedia/commons/a/ad/Alfajores-Argentins.JPG",
+};
+
+function applyStockPhotos(products: Product[]): Product[] {
+  return products.map((p) => {
+    const url = CATEGORY_STOCK_PHOTOS[p.categorySlug];
+    if (!url) return p;
+    return { ...p, images: p.images.map((img, i) => (i === 0 ? { ...img, url } : img)) };
+  });
+}
+
+const raw = [
+  // ── YERBAS ────────────────────────────────────────────────────────────
+  createProduct({
+    name: "Playadito Suave 1kg",
+    brandSlug: "playadito",
+    categorySlug: "yerbas",
+    price: 6200,
+    compareAtPrice: 7100,
+    availability: "in_stock",
+    stock: 240,
+    isBestSeller: true,
+    isFeatured: true,
+    tags: ["suave", "con-palo"],
+    shortDescription: "Yerba mate suave con palo, ideal para el día a día.",
+    description:
+      "Elaborada en Corrientes con un proceso de estacionamiento natural de 12 meses. Su despalado parejo y molienda media la hacen ideal para cebar con bombilla tradicional sin obstruirse.",
+    variants: [{ label: "500 g" }, { label: "1 kg" }, { label: "Pack x3 1kg", priceDelta: 15400 }],
+    weightGrams: 1000,
+    origin: "Corrientes, Argentina",
+  }),
+  createProduct({
+    name: "La Merced Tradición 1kg",
+    brandSlug: "la-merced",
+    categorySlug: "yerbas",
+    price: 5800,
+    availability: "in_stock",
+    stock: 180,
+    isFeatured: true,
+    tags: ["con-palo", "tradicional"],
+    shortDescription: "El sabor clásico misionero, con cuerpo e intensidad.",
+    description:
+      "Yerba compuesta con palo de sabor intenso y aroma pronunciado, elaborada siguiendo la receta tradicional jesuítica de estacionamiento lento en barril de madera.",
+    variants: [{ label: "500 g" }, { label: "1 kg" }],
+    weightGrams: 1000,
+    origin: "Misiones, Argentina",
+  }),
+  createProduct({
+    name: "Rosamonte Especial 1kg",
+    brandSlug: "rosamonte",
+    categorySlug: "yerbas",
+    price: 5990,
+    availability: "in_stock",
+    stock: 320,
+    isBestSeller: true,
+    tags: ["con-palo", "intensa"],
+    shortDescription: "La preferida para las juntadas largas, sabor fuerte y persistente.",
+    description:
+      "Un blend con mayor proporción de hoja que rinde varias rondas de agua sin perder sabor. Ideal para quienes prefieren un mate cargado.",
+    variants: [{ label: "500 g" }, { label: "1 kg" }, { label: "Pack x6 1kg", priceDelta: 30500 }],
+    weightGrams: 1000,
+    origin: "Misiones, Argentina",
+  }),
+  createProduct({
+    name: "Taragüi Sin Palo 1kg",
+    brandSlug: "taragui",
+    categorySlug: "yerbas",
+    price: 6100,
+    availability: "in_stock",
+    stock: 150,
+    tags: ["sin-palo"],
+    shortDescription: "Despalado especial para bombillas finas y mate cebado suave.",
+    description:
+      "Molienda fina sin palo, pensada para bombillas de filtro delicado. Sabor equilibrado, ni muy suave ni muy fuerte.",
+    variants: [{ label: "500 g" }, { label: "1 kg" }],
+    weightGrams: 1000,
+    origin: "Corrientes, Argentina",
+  }),
+  createProduct({
+    name: "CBSé Boldo Digestiva 500g",
+    brandSlug: "cbse",
+    categorySlug: "yerbas",
+    price: 4300,
+    availability: "in_stock",
+    stock: 90,
+    isNew: true,
+    tags: ["compuesta", "digestiva"],
+    shortDescription: "Yerba compuesta con boldo, peperina y otras hierbas digestivas.",
+    description:
+      "Un blend funcional pensado para después de las comidas, combina yerba mate con boldo, peperina, carqueja y limón.",
+    variants: [{ label: "500 g" }],
+    weightGrams: 500,
+    origin: "Santa Fe, Argentina",
+  }),
+  createProduct({
+    name: "Cruz de Malta Clásica 1kg",
+    brandSlug: "cruz-de-malta",
+    categorySlug: "yerbas",
+    price: 5700,
+    availability: "low_stock",
+    stock: 12,
+    tags: ["con-palo"],
+    shortDescription: "Equilibrada y suave, el clásico de todos los días.",
+    description:
+      "Una yerba de perfil suave, apta para quienes se están iniciando en el mate o prefieren un sabor menos amargo.",
+    variants: [{ label: "500 g" }, { label: "1 kg" }],
+    weightGrams: 1000,
+    origin: "Misiones, Argentina",
+  }),
+  createProduct({
+    name: "Amanda Selección Premium 500g",
+    brandSlug: "amanda",
+    categorySlug: "yerbas",
+    price: 6900,
+    availability: "in_stock",
+    stock: 60,
+    isFeatured: true,
+    tags: ["premium", "hoja-joven"],
+    shortDescription: "Selección de hojas jóvenes de estacionamiento extendido.",
+    description:
+      "Elaborada exclusivamente con hoja joven y un estacionamiento de 18 meses, logrando un sabor suave, dulzón y con notas herbales complejas.",
+    variants: [{ label: "500 g" }],
+    weightGrams: 500,
+    origin: "Misiones, Argentina",
+  }),
+  createProduct({
+    name: "Nobleza Gaucha Fuerte 1kg",
+    brandSlug: "nobleza-gaucha",
+    categorySlug: "yerbas",
+    price: 5500,
+    availability: "out_of_stock",
+    stock: 0,
+    tags: ["con-palo", "fuerte"],
+    shortDescription: "Sabor de campo, fuerte e intenso, para los paladares curtidos.",
+    description:
+      "Un perfil rústico y potente, con buena cantidad de palo, pensado para quienes disfrutan un mate bien cargado.",
+    variants: [{ label: "500 g" }, { label: "1 kg" }],
+    weightGrams: 1000,
+    origin: "Corrientes, Argentina",
+  }),
+  createProduct({
+    name: "Playadito Orgánica 500g",
+    brandSlug: "playadito",
+    categorySlug: "yerbas",
+    price: 7400,
+    availability: "in_stock",
+    stock: 45,
+    isNew: true,
+    tags: ["organica", "sin-palo"],
+    shortDescription: "Cultivo orgánico certificado, sin agroquímicos.",
+    description:
+      "Cultivada bajo sombra en fincas certificadas orgánicas, sin uso de agroquímicos ni fertilizantes sintéticos. Sabor limpio y suave.",
+    variants: [{ label: "500 g" }],
+    weightGrams: 500,
+    origin: "Corrientes, Argentina",
+  }),
+
+  // ── MATES ─────────────────────────────────────────────────────────────
+  createProduct({
+    name: "Mate Calabaza Torneado Cebra",
+    brandSlug: "cebra",
+    categorySlug: "mates",
+    price: 12500,
+    availability: "in_stock",
+    stock: 40,
+    isBestSeller: true,
+    isFeatured: true,
+    tags: ["calabaza", "artesanal"],
+    shortDescription: "Mate de calabaza torneado a mano, curado y listo para usar.",
+    description:
+      "Cada pieza es única, seleccionada y torneada a mano por artesanos correntinos. Se entrega curado con yerba y listo para el primer cebado. Incluye funda de regalo.",
+    variants: [{ label: "Natural" }, { label: "Forrado en cuero", priceDelta: 3200 }],
+    weightGrams: 220,
+    origin: "Corrientes, Argentina",
+  }),
+  createProduct({
+    name: "Mate Camionero Acero Inoxidable",
+    brandSlug: "cebra",
+    categorySlug: "mates",
+    price: 9800,
+    availability: "in_stock",
+    stock: 75,
+    isBestSeller: true,
+    tags: ["acero", "camionero"],
+    shortDescription: "El clásico mate camionero, irrompible y fácil de lavar.",
+    description:
+      "Cuerpo de acero inoxidable 18/8 apto para lavavajillas, con doble pared que reduce la transmisión de calor a la mano.",
+    variants: [{ label: "Cromado" }, { label: "Grabado láser", priceDelta: 1500 }],
+    weightGrams: 260,
+    origin: "Buenos Aires, Argentina",
+  }),
+  createProduct({
+    name: "Mate de Algarrobo Tallado",
+    brandSlug: "cebra",
+    categorySlug: "mates",
+    price: 15900,
+    availability: "in_stock",
+    stock: 22,
+    isFeatured: true,
+    tags: ["madera", "tallado"],
+    shortDescription: "Tallado en algarrobo macizo por artesanos del norte argentino.",
+    description:
+      "Madera de algarrobo seleccionada, secada naturalmente durante meses antes de ser tallada. Cada pieza presenta vetas únicas.",
+    variants: [{ label: "Único" }],
+    weightGrams: 310,
+    origin: "Santiago del Estero, Argentina",
+  }),
+  createProduct({
+    name: "Mate de Cerámica Esmaltada",
+    brandSlug: "cebra",
+    categorySlug: "mates",
+    price: 8600,
+    availability: "in_stock",
+    stock: 55,
+    isNew: true,
+    tags: ["ceramica", "diseno"],
+    shortDescription: "Diseño moderno esmaltado en tonos tierra, apto microondas.",
+    description:
+      "Cuerpo de cerámica de alta densidad esmaltada, con base de corcho antideslizante. Apto para lavavajillas y microondas.",
+    variants: [{ label: "Verde bosque" }, { label: "Crema" }, { label: "Terracota" }],
+    weightGrams: 340,
+    origin: "Buenos Aires, Argentina",
+  }),
+  createProduct({
+    name: "Mate Imperial Alpaca y Virola",
+    brandSlug: "cebra",
+    categorySlug: "mates",
+    price: 21500,
+    availability: "low_stock",
+    stock: 6,
+    isFeatured: true,
+    tags: ["alpaca", "premium"],
+    shortDescription: "Calabaza forrada en alpaca con guarda repujada a mano.",
+    description:
+      "Pieza de colección con virola y base de alpaca repujada artesanalmente, guarda floral clásica. Incluye caja de madera para regalo.",
+    variants: [{ label: "Único" }],
+    weightGrams: 280,
+    origin: "Salta, Argentina",
+  }),
+  createProduct({
+    name: "Mate Doble Vidrio Térmico",
+    brandSlug: "cebra",
+    categorySlug: "mates",
+    price: 7300,
+    availability: "in_stock",
+    stock: 88,
+    tags: ["vidrio", "moderno"],
+    shortDescription: "Diseño moderno de doble pared que aísla el calor.",
+    description:
+      "Vidrio borosilicato resistente a cambios térmicos, con doble pared que mantiene la temperatura del agua y protege la mano del calor.",
+    variants: [{ label: "Único" }],
+    weightGrams: 180,
+    origin: "Buenos Aires, Argentina",
+  }),
+  createProduct({
+    name: "Mate Porongo Mini Souvenir",
+    brandSlug: "cebra",
+    categorySlug: "mates",
+    price: 3200,
+    availability: "out_of_stock",
+    stock: 0,
+    tags: ["souvenir", "mini"],
+    shortDescription: "Tamaño mini ideal para souvenirs y regalos empresariales.",
+    description:
+      "Versión mini del clásico porongo, perfecta para regalos corporativos o souvenirs de eventos. Se puede personalizar con grabado por mayor.",
+    variants: [{ label: "Único" }],
+    weightGrams: 90,
+    origin: "Corrientes, Argentina",
+  }),
+
+  // ── BOMBILLAS ─────────────────────────────────────────────────────────
+  createProduct({
+    name: "Bombilla Alpaca Recta Clásica",
+    brandSlug: "cebra",
+    categorySlug: "bombillas",
+    price: 4200,
+    availability: "in_stock",
+    stock: 130,
+    isBestSeller: true,
+    tags: ["alpaca", "recta"],
+    shortDescription: "El diseño más vendido: recta, de alpaca genuina y filtro resorte.",
+    description:
+      "Filtro de resorte que evita el paso de yerba y palitos, fácil de desarmar para una limpieza profunda. Alpaca genuina que no se despinta.",
+    variants: [{ label: "17 cm" }, { label: "19 cm" }],
+    weightGrams: 30,
+  }),
+  createProduct({
+    name: "Bombilla Acero Quirúrgico Curva",
+    brandSlug: "cebra",
+    categorySlug: "bombillas",
+    price: 3600,
+    availability: "in_stock",
+    stock: 95,
+    tags: ["acero", "curva"],
+    shortDescription: "Curvatura ergonómica en acero quirúrgico hipoalergénico.",
+    description:
+      "Fabricada en acero quirúrgico 304, totalmente hipoalergénico. Su curvatura se adapta a la forma del mate camionero.",
+    variants: [{ label: "Único" }],
+    weightGrams: 28,
+  }),
+  createProduct({
+    name: "Bombilla Pico de Loro Premium",
+    brandSlug: "cebra",
+    categorySlug: "bombillas",
+    price: 6800,
+    availability: "in_stock",
+    stock: 34,
+    isFeatured: true,
+    isNew: true,
+    tags: ["premium", "pico-de-loro"],
+    shortDescription: "Boquilla ancha estilo pico de loro, muy cómoda para cebar.",
+    description:
+      "Boquilla ancha que distribuye mejor el agua en la boca, reduciendo el riesgo de quemaduras. Terminación pulida a espejo.",
+    variants: [{ label: "Alpaca" }, { label: "Alpaca con guarda", priceDelta: 2100 }],
+    weightGrams: 32,
+  }),
+  createProduct({
+    name: "Bombilla Filtro Desmontable Total",
+    brandSlug: "cebra",
+    categorySlug: "bombillas",
+    price: 5200,
+    availability: "low_stock",
+    stock: 8,
+    tags: ["desmontable", "facil-limpieza"],
+    shortDescription: "Sistema de filtro 100% desmontable para higiene total.",
+    description:
+      "El filtro se separa por completo del cuerpo, permitiendo un lavado profundo y eliminando cualquier resto de yerba acumulada.",
+    variants: [{ label: "Único" }],
+    weightGrams: 30,
+  }),
+
+  // ── TERMOS ────────────────────────────────────────────────────────────
+  createProduct({
+    name: "Termo Stanley Classic 1.4L",
+    brandSlug: "stanley",
+    categorySlug: "termos",
+    price: 89900,
+    availability: "in_stock",
+    stock: 28,
+    isBestSeller: true,
+    isFeatured: true,
+    freeShipping: true,
+    tags: ["acero", "24-horas"],
+    shortDescription: "El termo indestructible: 24 horas de frío o calor garantizado.",
+    description:
+      "Acero inoxidable 18/8 de doble pared al vacío, garantía de por vida del fabricante. Pico cebador de acción rápida con traba de seguridad.",
+    variants: [{ label: "Verde bosque" }, { label: "Negro mate", priceDelta: 4000 }],
+    weightGrams: 950,
+    origin: "Importado",
+  }),
+  createProduct({
+    name: "Termo Lumilagro Pampa 1L",
+    brandSlug: "lumilagro",
+    categorySlug: "termos",
+    price: 42500,
+    availability: "in_stock",
+    stock: 60,
+    isBestSeller: true,
+    tags: ["acero", "12-horas"],
+    shortDescription: "Termo argentino de acero, liviano y con pico cebador dosificador.",
+    description:
+      "Fabricado en Argentina con acero inoxidable de calidad alimentaria. Pico dosificador que regula el caudal de agua para cebar sin desperdiciar.",
+    variants: [{ label: "1 L" }, { label: "1.2 L", priceDelta: 5500 }],
+    weightGrams: 620,
+    origin: "Buenos Aires, Argentina",
+  }),
+  createProduct({
+    name: "Termo Vaypol Deportivo 750ml",
+    brandSlug: "lumilagro",
+    categorySlug: "termos",
+    price: 31900,
+    availability: "in_stock",
+    stock: 70,
+    isNew: true,
+    tags: ["deportivo", "compacto"],
+    shortDescription: "Formato compacto ideal para llevar en la mochila o el auto.",
+    description:
+      "Diseño compacto y correa reforzada para transportar cómodamente. Mantiene la temperatura hasta 10 horas.",
+    variants: [{ label: "Único" }],
+    weightGrams: 480,
+    origin: "Buenos Aires, Argentina",
+  }),
+  createProduct({
+    name: "Termo Stanley Legendary 1.9L",
+    brandSlug: "stanley",
+    categorySlug: "termos",
+    price: 129900,
+    availability: "low_stock",
+    stock: 5,
+    isFeatured: true,
+    freeShipping: true,
+    tags: ["acero", "familiar"],
+    shortDescription: "Capacidad familiar para juntadas largas, 24 horas de retención.",
+    description:
+      "La versión de mayor capacidad de la línea Legendary, pensada para reuniones largas o para no tener que recargar en todo el día.",
+    variants: [{ label: "Verde bosque" }],
+    weightGrams: 1250,
+    origin: "Importado",
+  }),
+  createProduct({
+    name: "Termo Lumilagro Mini 500ml",
+    brandSlug: "lumilagro",
+    categorySlug: "termos",
+    price: 24900,
+    availability: "out_of_stock",
+    stock: 0,
+    tags: ["mini", "portatil"],
+    shortDescription: "El más chico de la línea, perfecto para salidas cortas.",
+    description:
+      "Formato mini que entra en cualquier bolso o cartera, ideal para una sola ronda de mate fuera de casa.",
+    variants: [{ label: "Único" }],
+    weightGrams: 320,
+    origin: "Buenos Aires, Argentina",
+  }),
+
+  // ── ALFAJORES ─────────────────────────────────────────────────────────
+  createProduct({
+    name: "Alfajor Havanna Chocolate x6",
+    brandSlug: "havanna",
+    categorySlug: "alfajores",
+    price: 5400,
+    availability: "in_stock",
+    stock: 200,
+    isBestSeller: true,
+    tags: ["chocolate", "dulce-de-leche"],
+    shortDescription: "El clásico alfajor de Mar del Plata bañado en chocolate.",
+    description:
+      "Dos tapas de masa suave rellenas con dulce de leche repostero y bañadas en chocolate. Presentación de 6 unidades individuales.",
+    variants: [{ label: "Caja x6" }, { label: "Caja x12", priceDelta: 5100 }],
+    weightGrams: 300,
+  }),
+  createProduct({
+    name: "Alfajor Balcarce Maicena x6",
+    brandSlug: "balcarce",
+    categorySlug: "alfajores",
+    price: 4800,
+    availability: "in_stock",
+    stock: 140,
+    tags: ["maicena", "dulce-de-leche"],
+    shortDescription: "Tapas de maicena artesanales rellenas con dulce de leche y coco.",
+    description:
+      "Elaborado con la receta tradicional de maicena, bordeado en coco rallado. Textura suave y desarmable característica.",
+    variants: [{ label: "Caja x6" }],
+    weightGrams: 270,
+  }),
+  createProduct({
+    name: "Alfajor Havanna Negro x3",
+    brandSlug: "havanna",
+    categorySlug: "alfajores",
+    price: 3100,
+    availability: "in_stock",
+    stock: 180,
+    isNew: true,
+    tags: ["chocolate-negro"],
+    shortDescription: "Edición en chocolate negro 70% cacao para paladares intensos.",
+    description:
+      "La misma receta clásica de Havanna bañada en chocolate negro con 70% de cacao, para un sabor más intenso y menos dulce.",
+    variants: [{ label: "Pack x3" }],
+    weightGrams: 150,
+  }),
+  createProduct({
+    name: "Alfajor Cachafaz Triple",
+    brandSlug: "balcarce",
+    categorySlug: "alfajores",
+    price: 1600,
+    availability: "in_stock",
+    stock: 260,
+    tags: ["triple", "individual"],
+    shortDescription: "Triple capa de dulce de leche con baño de chocolate con leche.",
+    description:
+      "Tres tapas de masa y dos capas de dulce de leche, bañado en chocolate con leche. Formato individual ideal para acompañar el mate.",
+    variants: [{ label: "Unidad" }, { label: "Caja x12", priceDelta: 15000 }],
+    weightGrams: 85,
+  }),
+
+  // ── GALLETITAS ────────────────────────────────────────────────────────
+  createProduct({
+    name: "Galletitas Bagley Criollitas x400g",
+    brandSlug: "bagley",
+    categorySlug: "galletitas",
+    price: 2100,
+    availability: "in_stock",
+    stock: 300,
+    isBestSeller: true,
+    tags: ["saladas", "clasicas"],
+    shortDescription: "Las clásicas galletitas saladas de hojaldre para el mate.",
+    description:
+      "Galletitas de hojaldre horneadas, ligeramente saladas, ideales para acompañar el mate amargo o con queso y fiambre.",
+    variants: [{ label: "400 g" }],
+    weightGrams: 400,
+  }),
+  createProduct({
+    name: "Galletitas Bagley Merengadas x300g",
+    brandSlug: "bagley",
+    categorySlug: "galletitas",
+    price: 1900,
+    availability: "in_stock",
+    stock: 250,
+    tags: ["dulces", "clasicas"],
+    shortDescription: "Merengadas dulces y livianas, un clásico de la merienda argentina.",
+    description:
+      "Textura crocante y liviana con un toque dulce, perfectas para untar con dulce de leche o mermelada.",
+    variants: [{ label: "300 g" }],
+    weightGrams: 300,
+  }),
+  createProduct({
+    name: "Galletitas Cerealitas Salvado x300g",
+    brandSlug: "bagley",
+    categorySlug: "galletitas",
+    price: 2300,
+    availability: "low_stock",
+    stock: 10,
+    isNew: true,
+    tags: ["integrales", "salvado"],
+    shortDescription: "Opción integral con salvado de trigo, alta en fibra.",
+    description:
+      "Elaboradas con salvado de trigo, aportan fibra a la dieta diaria sin resignar sabor. Ideales para una merienda más liviana.",
+    variants: [{ label: "300 g" }],
+    weightGrams: 300,
+  }),
+
+  // ── ACCESORIOS ────────────────────────────────────────────────────────
+  createProduct({
+    name: "Yerbera de Acero con Tapa Hermética",
+    brandSlug: "cebra",
+    categorySlug: "accesorios",
+    price: 11200,
+    availability: "in_stock",
+    stock: 48,
+    isFeatured: true,
+    tags: ["yerbera", "hermetica"],
+    shortDescription: "Conserva el aroma y la frescura de la yerba por más tiempo.",
+    description:
+      "Cuerpo de acero inoxidable con tapa hermética de silicona alimentaria. Capacidad para 1kg de yerba.",
+    variants: [{ label: "1 kg" }, { label: "2 kg", priceDelta: 3200 }],
+    weightGrams: 400,
+  }),
+  createProduct({
+    name: "Matera de Cuero Ecológico",
+    brandSlug: "cebra",
+    categorySlug: "accesorios",
+    price: 18900,
+    availability: "in_stock",
+    stock: 33,
+    isBestSeller: true,
+    tags: ["matera", "cuero-ecologico"],
+    shortDescription: "Bolso matero con compartimentos para termo, mate, yerbera y bombilla.",
+    description:
+      "Diseño compacto con compartimentos independientes acolchados para termo, mate, yerbera y bombilla. Cierre reforzado y tira ajustable.",
+    variants: [{ label: "Verde bosque" }, { label: "Marrón cuero" }],
+    weightGrams: 650,
+  }),
+  createProduct({
+    name: "Set de Regalo Iniciación al Mate",
+    brandSlug: "cebra",
+    categorySlug: "accesorios",
+    price: 26500,
+    compareAtPrice: 31000,
+    availability: "in_stock",
+    stock: 25,
+    isFeatured: true,
+    isNew: true,
+    freeShipping: true,
+    tags: ["set", "regalo"],
+    shortDescription: "Mate, bombilla, yerbera mini y manual de iniciación en caja premium.",
+    description:
+      "El kit ideal para quienes se inician en el mundo del mate o quieren regalarlo: incluye mate de calabaza curado, bombilla de alpaca, yerbera mini y una guía de cebado, todo en caja de regalo premium.",
+    variants: [{ label: "Único" }],
+    weightGrams: 900,
+  }),
+  createProduct({
+    name: "Cepillo de Cerda Natural para Mate",
+    brandSlug: "cebra",
+    categorySlug: "accesorios",
+    price: 2400,
+    availability: "in_stock",
+    stock: 120,
+    tags: ["limpieza"],
+    shortDescription: "Cepillo de mango de madera y cerdas naturales para limpiar el mate.",
+    description:
+      "Cerdas naturales suaves que no rayan la calabaza ni la cerámica, con mango de madera maciza.",
+    variants: [{ label: "Único" }],
+    weightGrams: 40,
+  }),
+  createProduct({
+    name: "Posamate Individual de Algarrobo",
+    brandSlug: "cebra",
+    categorySlug: "accesorios",
+    price: 3800,
+    availability: "out_of_stock",
+    stock: 0,
+    tags: ["posamate", "madera"],
+    shortDescription: "Base individual de algarrobo para apoyar el mate en la mesa.",
+    description:
+      "Tallado en algarrobo macizo, protege la mesa del calor y la humedad del mate mientras se comparte la ronda.",
+    variants: [{ label: "Único" }],
+    weightGrams: 150,
+  }),
+];
+
+export const products = linkRelated(applyStockPhotos(raw));
+
+export function getProductBySlug(slug: string) {
+  return products.find((p) => p.slug === slug);
+}
+
+export function getFeaturedProducts() {
+  return products.filter((p) => p.isFeatured);
+}
+
+export function getNewProducts() {
+  return products.filter((p) => p.isNew);
+}
+
+export function getBestSellerProducts() {
+  return products.filter((p) => p.isBestSeller);
+}
+
+export function getOnSaleProducts() {
+  return products.filter((p) => p.compareAtPrice && p.compareAtPrice > p.price);
+}
+
+export function getProductsByCategory(categorySlug: string) {
+  return products.filter((p) => p.categorySlug === categorySlug);
+}
